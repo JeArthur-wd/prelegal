@@ -1,6 +1,7 @@
 # Promissory Note
 
 **Principal amount:** {{principal_amount}}
+
 **Date:** {{note_date}}
 
 FOR VALUE RECEIVED, **{{borrower_name}}**, of {{borrower_address}} (the "Borrower"), promises to pay to the order of **{{lender_name}}**, of {{lender_address}} (the "Lender"), the principal sum of {{principal_amount}}, together with interest as set out below.
@@ -44,11 +45,15 @@ This Note is governed by the laws of {{governing_law}}.
 **Borrower**
 
 Signature: ______________________
+
 Name: {{borrower_name}}
+
 Date: ______________________
 
 **Lender**
 
 Signature: ______________________
+
 Name: {{lender_name}}
+
 Date: ______________________

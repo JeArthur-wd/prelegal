@@ -1,4 +1,5 @@
 {{sender_name}}
+
 {{sender_address}}
 
 {{letter_date}}
@@ -6,6 +7,7 @@
 **VIA {{delivery_method}}**
 
 {{recipient_name}}
+
 {{recipient_address}}
 
 **Re: Demand to Cease and Desist — {{subject}}**
@@ -41,4 +43,5 @@ This letter is not a complete statement of the facts or of our rights or claims,
 Sincerely,
 
 ______________________
+
 {{sender_name}}

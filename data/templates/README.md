@@ -31,6 +31,8 @@ data/templates/
 
 Templates are Markdown. Variable values are written as `{{field_name}}` placeholders (snake_case). The same placeholder may appear several times and is filled with the same value everywhere. Blank signature/date lines (`______`) are left for wet or electronic signing.
 
+Markdown joins consecutive lines into one paragraph, so lines that must stay separate (signature blocks, letter address headers) are separated by a blank line.
+
 ## Catalog format
 
 Each entry in `catalog.json` → `templates` has:
@@ -66,4 +68,4 @@ Each field has:
    python scripts/validate_templates.py
    ```
 
-   It checks that the catalog is well formed, that every placeholder is declared, that every declared field is used, and that every template file is catalogued.
+   It checks that the catalog is well formed, that every placeholder is declared, that every declared field is used, that every template file is catalogued, and that no lines would be unintentionally joined when rendered.

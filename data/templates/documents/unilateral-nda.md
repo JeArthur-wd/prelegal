@@ -63,11 +63,15 @@ This Agreement is the entire agreement between the parties on its subject matter
 **Discloser: {{discloser_name}}**
 
 Signature: ______________________
+
 Name: {{discloser_signatory_name}}
+
 Date: ______________________
 
 **Recipient: {{recipient_name}}**
 
 Signature: ______________________
+
 Name: {{recipient_signatory_name}}
+
 Date: ______________________

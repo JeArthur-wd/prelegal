@@ -1,9 +1,11 @@
 {{company_name}}
+
 {{company_address}}
 
 {{letter_date}}
 
 {{candidate_name}}
+
 {{candidate_address}}
 
 **Re: Offer of Employment**
@@ -48,8 +50,11 @@ We look forward to welcoming you to {{company_name}}.
 Sincerely,
 
 ______________________
+
 {{signatory_name}}
+
 {{signatory_title}}
+
 {{company_name}}
 
 ---
@@ -59,5 +64,7 @@ ______________________
 I accept the offer of employment on the terms described above.
 
 Signature: ______________________
+
 Name: {{candidate_name}}
+
 Date: ______________________

@@ -15,6 +15,8 @@ TEMPLATES_DIR = Path(__file__).resolve().parent.parent / "data" / "templates"
 PLACEHOLDER_RE = re.compile(r"\{\{\s*([^{}]*?)\s*\}\}")
 FIELD_NAME_RE = re.compile(r"^[a-z][a-z0-9_]*$")
 TEMPLATE_ID_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
+# Consecutive lines are only kept apart by Markdown inside lists and tables.
+LIST_ITEM_RE = re.compile(r"^\s*(\d+\.|[-*]|\|)\s")
 
 
 def validate(templates_dir: Path = TEMPLATES_DIR) -> list[str]:
@@ -64,7 +66,18 @@ def validate(templates_dir: Path = TEMPLATES_DIR) -> list[str]:
             if not field.get("required") and "default" not in field:
                 errors.append(f"{tid}.{name}: optional field needs a 'default'")
 
-        used = set(PLACEHOLDER_RE.findall(path.read_text(encoding="utf-8")))
+        text = path.read_text(encoding="utf-8")
+        lines = text.split("\n")
+        for number, (prev, line) in enumerate(zip(lines, lines[1:]), start=2):
+            if prev.strip() and line.strip() and not (
+                LIST_ITEM_RE.match(prev) or LIST_ITEM_RE.match(line)
+            ):
+                errors.append(
+                    f"{tid}: line {number} would be joined onto the previous line "
+                    "when rendered; separate them with a blank line"
+                )
+
+        used = set(PLACEHOLDER_RE.findall(text))
         for name in sorted(used - declared):
             errors.append(f"{tid}: placeholder {{{{{name}}}}} is not declared in the catalog")
         for name in sorted(declared - used):

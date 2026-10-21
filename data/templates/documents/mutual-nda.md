@@ -64,13 +64,19 @@ This Agreement constitutes the entire agreement between the Parties regarding it
 **{{party_a_name}}**
 
 Signature: ______________________
+
 Name: {{party_a_signatory_name}}
+
 Title: {{party_a_signatory_title}}
+
 Date: ______________________
 
 **{{party_b_name}}**
 
 Signature: ______________________
+
 Name: {{party_b_signatory_name}}
+
 Title: {{party_b_signatory_title}}
+
 Date: ______________________

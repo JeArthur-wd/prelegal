@@ -60,5 +60,7 @@ We may update this Privacy Policy from time to time. We will post the updated po
 If you have questions about this Privacy Policy, contact us at:
 
 {{company_name}}
+
 {{company_address}}
+
 Email: {{contact_email}}

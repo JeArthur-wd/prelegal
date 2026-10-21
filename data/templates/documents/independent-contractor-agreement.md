@@ -57,10 +57,13 @@ This Agreement constitutes the entire agreement between the parties and supersed
 **Client: {{client_name}}**
 
 Signature: ______________________
+
 Name: {{client_signatory_name}}
+
 Date: ______________________
 
 **Contractor: {{contractor_name}}**
 
 Signature: ______________________
+
 Date: ______________________

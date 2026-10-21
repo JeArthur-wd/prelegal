@@ -39,11 +39,15 @@ This Bill of Sale is governed by the laws of {{governing_law}}.
 **Seller**
 
 Signature: ______________________
+
 Name: {{seller_name}}
+
 Date: ______________________
 
 **Buyer**
 
 Signature: ______________________
+
 Name: {{buyer_name}}
+
 Date: ______________________

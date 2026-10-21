@@ -67,11 +67,15 @@ This Lease is the entire agreement between the parties. Any changes must be in w
 **Landlord**
 
 Signature: ______________________
+
 Name: {{landlord_name}}
+
 Date: ______________________
 
 **Tenant(s)**
 
 Signature: ______________________
+
 Name(s): {{tenant_names}}
+
 Date: ______________________

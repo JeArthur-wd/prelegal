@@ -43,7 +43,9 @@ This Power of Attorney is governed by the laws of {{governing_law}}.
 ## Signature of Principal
 
 Signature: ______________________
+
 Name: {{principal_name}}
+
 Date: ______________________
 
 ## Acceptance by Agent
@@ -51,7 +53,9 @@ Date: ______________________
 I accept this appointment and agree to act in the Principal's best interest.
 
 Signature: ______________________
+
 Name: {{agent_name}}
+
 Date: ______________________
 
 ## Witness / Notary Acknowledgment
@@ -59,5 +63,7 @@ Date: ______________________
 _Many jurisdictions require this document to be witnessed and/or notarized to be valid. Complete the section required by local law._
 
 Witness signature: ______________________
+
 Witness name: ______________________
+
 Date: ______________________
