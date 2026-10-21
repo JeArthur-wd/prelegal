@@ -46,7 +46,7 @@ export default function DocumentCreator({ template }: { template: Template }) {
   }
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)]">
+    <div className="grid gap-8 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] print:block">
       <form
         className="space-y-5 print:hidden"
         onSubmit={(event) => event.preventDefault()}
