@@ -1,0 +1,227 @@
+{
+  "version": 1,
+  "placeholder_syntax": "{{field_name}}",
+  "field_types": ["text", "textarea", "date", "number", "currency", "email", "url", "select"],
+  "templates": [
+    {
+      "id": "mutual-nda",
+      "title": "Mutual Non-Disclosure Agreement",
+      "category": "confidentiality",
+      "description": "Two-way NDA for parties that will both share confidential information, e.g. when exploring a partnership.",
+      "file": "documents/mutual-nda.md",
+      "fields": [
+        { "name": "effective_date", "label": "Effective date", "type": "date", "required": true },
+        { "name": "party_a_name", "label": "Party A legal name", "type": "text", "required": true },
+        { "name": "party_a_address", "label": "Party A address", "type": "textarea", "required": true },
+        { "name": "party_a_signatory_name", "label": "Party A signatory name", "type": "text", "required": true },
+        { "name": "party_a_signatory_title", "label": "Party A signatory title", "type": "text", "required": true },
+        { "name": "party_b_name", "label": "Party B legal name", "type": "text", "required": true },
+        { "name": "party_b_address", "label": "Party B address", "type": "textarea", "required": true },
+        { "name": "party_b_signatory_name", "label": "Party B signatory name", "type": "text", "required": true },
+        { "name": "party_b_signatory_title", "label": "Party B signatory title", "type": "text", "required": true },
+        { "name": "purpose", "label": "Purpose of disclosure", "type": "textarea", "required": true, "description": "e.g. evaluating a potential business relationship" },
+        { "name": "term_years", "label": "Agreement term (years)", "type": "number", "required": true, "default": 2 },
+        { "name": "confidentiality_period_years", "label": "Confidentiality survival period (years)", "type": "number", "required": true, "default": 3 },
+        { "name": "governing_law", "label": "Governing law (jurisdiction)", "type": "text", "required": true }
+      ]
+    },
+    {
+      "id": "unilateral-nda",
+      "title": "Non-Disclosure Agreement (One-Way)",
+      "category": "confidentiality",
+      "description": "One-way NDA where only one party discloses confidential information, e.g. to a contractor or prospective investor.",
+      "file": "documents/unilateral-nda.md",
+      "fields": [
+        { "name": "effective_date", "label": "Effective date", "type": "date", "required": true },
+        { "name": "discloser_name", "label": "Disclosing party name", "type": "text", "required": true },
+        { "name": "discloser_address", "label": "Disclosing party address", "type": "textarea", "required": true },
+        { "name": "discloser_signatory_name", "label": "Disclosing party signatory name", "type": "text", "required": true },
+        { "name": "recipient_name", "label": "Receiving party name", "type": "text", "required": true },
+        { "name": "recipient_address", "label": "Receiving party address", "type": "textarea", "required": true },
+        { "name": "recipient_signatory_name", "label": "Receiving party signatory name", "type": "text", "required": true },
+        { "name": "purpose", "label": "Purpose of disclosure", "type": "textarea", "required": true },
+        { "name": "confidentiality_period_years", "label": "Confidentiality period (years)", "type": "number", "required": true, "default": 3 },
+        { "name": "governing_law", "label": "Governing law (jurisdiction)", "type": "text", "required": true }
+      ]
+    },
+    {
+      "id": "independent-contractor-agreement",
+      "title": "Independent Contractor Agreement",
+      "category": "business",
+      "description": "Engages a freelancer or contractor to perform services, with IP assignment and confidentiality terms.",
+      "file": "documents/independent-contractor-agreement.md",
+      "fields": [
+        { "name": "effective_date", "label": "Effective date", "type": "date", "required": true },
+        { "name": "client_name", "label": "Client name", "type": "text", "required": true },
+        { "name": "client_address", "label": "Client address", "type": "textarea", "required": true },
+        { "name": "client_signatory_name", "label": "Client signatory name", "type": "text", "required": true },
+        { "name": "contractor_name", "label": "Contractor name", "type": "text", "required": true },
+        { "name": "contractor_address", "label": "Contractor address", "type": "textarea", "required": true },
+        { "name": "services_description", "label": "Description of services", "type": "textarea", "required": true },
+        { "name": "start_date", "label": "Start date", "type": "date", "required": true },
+        { "name": "end_date", "label": "End date", "type": "date", "required": true },
+        { "name": "compensation_amount", "label": "Compensation amount", "type": "currency", "required": true },
+        { "name": "compensation_basis", "label": "Compensation basis", "type": "select", "required": true, "options": ["per hour", "per day", "per month", "as a fixed fee for the project"], "default": "per hour" },
+        { "name": "invoice_frequency", "label": "Invoice frequency", "type": "select", "required": true, "options": ["weekly", "every two weeks", "monthly", "upon completion"], "default": "monthly" },
+        { "name": "payment_terms_days", "label": "Payment terms (days)", "type": "number", "required": true, "default": 30 },
+        { "name": "termination_notice_days", "label": "Termination notice (days)", "type": "number", "required": true, "default": 14 },
+        { "name": "governing_law", "label": "Governing law (jurisdiction)", "type": "text", "required": true }
+      ]
+    },
+    {
+      "id": "employment-offer-letter",
+      "title": "Employment Offer Letter",
+      "category": "employment",
+      "description": "Formal job offer setting out role, start date, salary, benefits and conditions.",
+      "file": "documents/employment-offer-letter.md",
+      "fields": [
+        { "name": "company_name", "label": "Company name", "type": "text", "required": true },
+        { "name": "company_address", "label": "Company address", "type": "textarea", "required": true },
+        { "name": "letter_date", "label": "Letter date", "type": "date", "required": true },
+        { "name": "candidate_name", "label": "Candidate name", "type": "text", "required": true },
+        { "name": "candidate_address", "label": "Candidate address", "type": "textarea", "required": true },
+        { "name": "job_title", "label": "Job title", "type": "text", "required": true },
+        { "name": "manager_name", "label": "Reporting manager", "type": "text", "required": true },
+        { "name": "start_date", "label": "Start date", "type": "date", "required": true },
+        { "name": "employment_type", "label": "Employment type", "type": "select", "required": true, "options": ["Full-time", "Part-time", "Fixed-term"], "default": "Full-time" },
+        { "name": "work_location", "label": "Work location", "type": "text", "required": true, "description": "Office address, remote, or hybrid arrangement" },
+        { "name": "base_salary", "label": "Annual base salary", "type": "currency", "required": true },
+        { "name": "benefits_summary", "label": "Benefits summary", "type": "textarea", "required": true },
+        { "name": "probation_period", "label": "Probation period", "type": "text", "required": true, "default": "three (3) months" },
+        { "name": "offer_expiry_date", "label": "Offer expiry date", "type": "date", "required": true },
+        { "name": "signatory_name", "label": "Company signatory name", "type": "text", "required": true },
+        { "name": "signatory_title", "label": "Company signatory title", "type": "text", "required": true }
+      ]
+    },
+    {
+      "id": "residential-lease-agreement",
+      "title": "Residential Lease Agreement",
+      "category": "real-estate",
+      "description": "Fixed-term lease of a residential property between a landlord and tenant(s).",
+      "file": "documents/residential-lease-agreement.md",
+      "fields": [
+        { "name": "agreement_date", "label": "Agreement date", "type": "date", "required": true },
+        { "name": "landlord_name", "label": "Landlord name", "type": "text", "required": true },
+        { "name": "landlord_address", "label": "Landlord address", "type": "textarea", "required": true },
+        { "name": "tenant_names", "label": "Tenant name(s)", "type": "text", "required": true },
+        { "name": "property_address", "label": "Property address", "type": "textarea", "required": true },
+        { "name": "included_items", "label": "Included furnishings/appliances", "type": "textarea", "required": false, "default": "none" },
+        { "name": "lease_start_date", "label": "Lease start date", "type": "date", "required": true },
+        { "name": "lease_end_date", "label": "Lease end date", "type": "date", "required": true },
+        { "name": "notice_period_days", "label": "Notice period (days)", "type": "number", "required": true, "default": 30 },
+        { "name": "monthly_rent", "label": "Monthly rent", "type": "currency", "required": true },
+        { "name": "rent_due_day", "label": "Rent due day of month", "type": "number", "required": true, "default": 1 },
+        { "name": "payment_method", "label": "Rent payment method", "type": "text", "required": true, "default": "bank transfer" },
+        { "name": "late_fee", "label": "Late fee", "type": "currency", "required": true },
+        { "name": "security_deposit", "label": "Security deposit", "type": "currency", "required": true },
+        { "name": "additional_occupants", "label": "Additional occupants", "type": "text", "required": false, "default": "none" },
+        { "name": "tenant_utilities", "label": "Utilities paid by tenant", "type": "textarea", "required": true },
+        { "name": "pet_policy", "label": "Pet policy", "type": "select", "required": true, "options": ["No pets are permitted", "Pets are permitted with the Landlord's prior written consent", "Pets are permitted"], "default": "No pets are permitted" },
+        { "name": "governing_law", "label": "Governing law (jurisdiction)", "type": "text", "required": true }
+      ]
+    },
+    {
+      "id": "bill-of-sale",
+      "title": "Bill of Sale",
+      "category": "personal",
+      "description": "Records the transfer of ownership of personal property (e.g. a vehicle or equipment) from seller to buyer.",
+      "file": "documents/bill-of-sale.md",
+      "fields": [
+        { "name": "sale_date", "label": "Date of sale", "type": "date", "required": true },
+        { "name": "seller_name", "label": "Seller name", "type": "text", "required": true },
+        { "name": "seller_address", "label": "Seller address", "type": "textarea", "required": true },
+        { "name": "buyer_name", "label": "Buyer name", "type": "text", "required": true },
+        { "name": "buyer_address", "label": "Buyer address", "type": "textarea", "required": true },
+        { "name": "item_description", "label": "Description of property", "type": "textarea", "required": true },
+        { "name": "item_identifier", "label": "Serial / identification number", "type": "text", "required": false, "default": "N/A" },
+        { "name": "purchase_price", "label": "Purchase price", "type": "currency", "required": true },
+        { "name": "payment_method", "label": "Payment method", "type": "text", "required": true },
+        { "name": "known_encumbrances", "label": "Known liens or encumbrances", "type": "text", "required": false, "default": "none" },
+        { "name": "governing_law", "label": "Governing law (jurisdiction)", "type": "text", "required": true }
+      ]
+    },
+    {
+      "id": "promissory-note",
+      "title": "Promissory Note",
+      "category": "finance",
+      "description": "A borrower's written promise to repay a loan with interest on agreed terms.",
+      "file": "documents/promissory-note.md",
+      "fields": [
+        { "name": "note_date", "label": "Date of note", "type": "date", "required": true },
+        { "name": "principal_amount", "label": "Principal amount", "type": "currency", "required": true },
+        { "name": "borrower_name", "label": "Borrower name", "type": "text", "required": true },
+        { "name": "borrower_address", "label": "Borrower address", "type": "textarea", "required": true },
+        { "name": "lender_name", "label": "Lender name", "type": "text", "required": true },
+        { "name": "lender_address", "label": "Lender address", "type": "textarea", "required": true },
+        { "name": "interest_rate_percent", "label": "Annual interest rate (%)", "type": "number", "required": true },
+        { "name": "repayment_schedule", "label": "Repayment schedule", "type": "textarea", "required": true, "description": "e.g. 12 equal monthly installments beginning on a given date" },
+        { "name": "maturity_date", "label": "Maturity date", "type": "date", "required": true },
+        { "name": "grace_period_days", "label": "Grace period (days)", "type": "number", "required": true, "default": 10 },
+        { "name": "late_fee", "label": "Late fee", "type": "currency", "required": true },
+        { "name": "governing_law", "label": "Governing law (jurisdiction)", "type": "text", "required": true }
+      ]
+    },
+    {
+      "id": "general-power-of-attorney",
+      "title": "General Power of Attorney",
+      "category": "personal",
+      "description": "Authorizes an agent to act on the principal's behalf in financial and legal matters.",
+      "file": "documents/general-power-of-attorney.md",
+      "fields": [
+        { "name": "principal_name", "label": "Principal name", "type": "text", "required": true },
+        { "name": "principal_address", "label": "Principal address", "type": "textarea", "required": true },
+        { "name": "agent_name", "label": "Agent name", "type": "text", "required": true },
+        { "name": "agent_address", "label": "Agent address", "type": "textarea", "required": true },
+        { "name": "granted_powers", "label": "Powers granted", "type": "textarea", "required": true, "description": "e.g. banking, real estate, tax matters, business operations" },
+        { "name": "limitations", "label": "Limitations on authority", "type": "textarea", "required": false, "default": "none" },
+        { "name": "effective_date", "label": "Effective date", "type": "date", "required": true },
+        { "name": "expiration", "label": "Expiration", "type": "text", "required": true, "description": "A date, or e.g. 'revoked in writing'" },
+        { "name": "durability_clause", "label": "Durability", "type": "select", "required": true, "options": ["This Power of Attorney shall not be affected by my subsequent incapacity.", "This Power of Attorney shall terminate upon my incapacity."], "default": "This Power of Attorney shall not be affected by my subsequent incapacity." },
+        { "name": "successor_agent_name", "label": "Successor agent name", "type": "text", "required": false, "default": "no one" },
+        { "name": "agent_compensation", "label": "Agent compensation", "type": "text", "required": false, "default": "none" },
+        { "name": "governing_law", "label": "Governing law (jurisdiction)", "type": "text", "required": true }
+      ]
+    },
+    {
+      "id": "cease-and-desist-letter",
+      "title": "Cease and Desist Letter",
+      "category": "disputes",
+      "description": "Demands that the recipient stop infringing, harassing, defamatory or otherwise unlawful conduct.",
+      "file": "documents/cease-and-desist-letter.md",
+      "fields": [
+        { "name": "sender_name", "label": "Sender name", "type": "text", "required": true },
+        { "name": "sender_address", "label": "Sender address", "type": "textarea", "required": true },
+        { "name": "letter_date", "label": "Letter date", "type": "date", "required": true },
+        { "name": "delivery_method", "label": "Delivery method", "type": "select", "required": true, "options": ["EMAIL", "CERTIFIED MAIL", "COURIER", "HAND DELIVERY"], "default": "CERTIFIED MAIL" },
+        { "name": "recipient_name", "label": "Recipient name", "type": "text", "required": true },
+        { "name": "recipient_address", "label": "Recipient address", "type": "textarea", "required": true },
+        { "name": "subject", "label": "Subject", "type": "text", "required": true, "description": "e.g. Trademark infringement" },
+        { "name": "conduct_description", "label": "Description of the conduct", "type": "textarea", "required": true },
+        { "name": "first_observed_date", "label": "Date conduct first observed", "type": "date", "required": true },
+        { "name": "rights_basis", "label": "Legal basis of sender's rights", "type": "textarea", "required": true },
+        { "name": "demanded_actions", "label": "Actions demanded", "type": "textarea", "required": true },
+        { "name": "response_deadline", "label": "Response deadline", "type": "date", "required": true }
+      ]
+    },
+    {
+      "id": "privacy-policy",
+      "title": "Privacy Policy",
+      "category": "online",
+      "description": "Website or app privacy policy describing what data is collected, how it is used and users' rights.",
+      "file": "documents/privacy-policy.md",
+      "fields": [
+        { "name": "last_updated_date", "label": "Last updated date", "type": "date", "required": true },
+        { "name": "company_name", "label": "Company name", "type": "text", "required": true },
+        { "name": "company_address", "label": "Company address", "type": "textarea", "required": true },
+        { "name": "service_name", "label": "Website/app name", "type": "text", "required": true },
+        { "name": "website_url", "label": "Website URL", "type": "url", "required": true },
+        { "name": "collected_personal_data", "label": "Personal data collected", "type": "textarea", "required": true, "description": "e.g. name, email address, billing information" },
+        { "name": "additional_purposes", "label": "Additional uses of data", "type": "textarea", "required": false, "default": "none" },
+        { "name": "third_party_processors", "label": "Third-party service providers", "type": "textarea", "required": true, "description": "e.g. hosting, payment processing, analytics" },
+        { "name": "retention_period", "label": "Data retention period", "type": "text", "required": true, "default": "as long as your account is active" },
+        { "name": "minimum_age", "label": "Minimum user age", "type": "number", "required": true, "default": 13 },
+        { "name": "contact_email", "label": "Privacy contact email", "type": "email", "required": true }
+      ]
+    }
+  ]
+}
