@@ -22,7 +22,7 @@ COPY backend/ ./backend/
 
 # Install Python dependencies
 WORKDIR /app/backend
-RUN uv sync
+RUN uv sync --no-dev
 
 # Copy frontend build
 WORKDIR /app

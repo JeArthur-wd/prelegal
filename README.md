@@ -61,6 +61,12 @@ uv run uvicorn main:app --reload
 ```
 Available at http://localhost:8000
 
+### Running Tests
+```bash
+cd backend && uv run pytest     # Backend (in-memory SQLite, no API key needed)
+cd frontend && npx jest         # Frontend
+```
+
 ## Project Structure
 
 ```
