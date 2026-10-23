@@ -15,6 +15,7 @@ WORKDIR /app/backend
 COPY backend/pyproject.toml backend/uv.lock ./
 RUN uv sync --locked --no-dev
 COPY backend/ ./
+COPY data/ /app/data/
 COPY --from=frontend /app/frontend/out /app/frontend/out
 
 ENV PRELEGAL_DB_PATH=/app/data/prelegal.db

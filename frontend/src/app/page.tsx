@@ -14,8 +14,8 @@ export default async function Home() {
           {template.title} creator
         </h1>
         <p className="mt-2 text-stone-600">
-          Fill in the details below. The agreement updates as you type, and you
-          can download it once every required field is complete.
+          Chat with our assistant about your agreement. The document fills in as
+          you go, and you can download it once every required field is complete.
         </p>
       </header>
 

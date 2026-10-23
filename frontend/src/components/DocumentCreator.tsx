@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
+import ChatPanel from "@/components/ChatPanel";
+import { postChat, type ChatMessage } from "@/lib/api";
 import {
   fillTemplate,
   initialValues,
@@ -15,10 +17,18 @@ import {
 // In the preview, missing fields render as inline code, which is styled as a highlight.
 const renderMissingForPreview = (field: TemplateField) => `\`${field.label}\``;
 
+function greeting(template: Template): ChatMessage {
+  return {
+    role: "assistant",
+    content: `Hi! I'll help you draft a **${template.title}**. Tell me a bit about the agreement, or just answer my questions as we go.\n\nTo start: who are the two parties?`,
+  };
+}
+
 export default function DocumentCreator({ template }: { template: Template }) {
-  const [values, setValues] = useState<FieldValues>(() =>
-    initialValues(template.fields),
-  );
+  const [values, setValues] = useState<FieldValues>(() => initialValues(template.fields));
+  const [messages, setMessages] = useState<ChatMessage[]>(() => [greeting(template)]);
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const preview = useMemo(
     () => fillTemplate(template, values, renderMissingForPreview),
@@ -27,8 +37,30 @@ export default function DocumentCreator({ template }: { template: Template }) {
   const missing = missingRequiredFields(template.fields, values);
   const isComplete = missing.length === 0;
 
-  function setValue(name: string, value: string) {
-    setValues((current) => ({ ...current, [name]: value }));
+  /** Sends the conversation (ending with the user's latest message) to the assistant. */
+  async function converse(history: ChatMessage[]) {
+    setMessages(history);
+    setPending(true);
+    setError(null);
+    try {
+      const { reply, updates } = await postChat({
+        template_id: template.id,
+        messages: history,
+        values,
+      });
+      setValues((current) => ({ ...current, ...updates }));
+      setMessages([...history, { role: "assistant", content: reply }]);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setPending(false);
+    }
+  }
+
+  function startOver() {
+    setValues(initialValues(template.fields));
+    setMessages([greeting(template)]);
+    setError(null);
   }
 
   function download() {
@@ -46,21 +78,17 @@ export default function DocumentCreator({ template }: { template: Template }) {
   }
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] print:block">
-      <form
-        className="space-y-5 print:hidden"
-        onSubmit={(event) => event.preventDefault()}
-      >
-        {template.fields.map((field) => (
-          <FieldInput
-            key={field.name}
-            field={field}
-            value={values[field.name] ?? ""}
-            onChange={(value) => setValue(field.name, value)}
-          />
-        ))}
+    <div className="grid gap-8 lg:grid-cols-[minmax(0,28rem)_minmax(0,1fr)] print:block">
+      <div className="flex h-[70vh] flex-col gap-3 lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] print:hidden">
+        <ChatPanel
+          messages={messages}
+          pending={pending}
+          error={error}
+          onSend={(text) => converse([...messages, { role: "user", content: text }])}
+          onRetry={() => converse(messages)}
+        />
 
-        <div className="sticky bottom-0 -mx-1 space-y-3 border-t border-stone-200 bg-stone-50 px-1 py-4">
+        <div className="space-y-3">
           <p className="text-sm text-stone-600" aria-live="polite">
             {isComplete
               ? "All required fields are complete."
@@ -85,14 +113,15 @@ export default function DocumentCreator({ template }: { template: Template }) {
             </button>
             <button
               type="button"
-              onClick={() => setValues(initialValues(template.fields))}
-              className="px-2 py-2 text-sm text-stone-600 underline-offset-4 hover:underline"
+              onClick={startOver}
+              disabled={pending}
+              className="px-2 py-2 text-sm text-stone-600 underline-offset-4 hover:underline disabled:cursor-not-allowed"
             >
-              Reset
+              Start over
             </button>
           </div>
         </div>
-      </form>
+      </div>
 
       <article
         aria-label={`${template.title} preview`}
@@ -102,74 +131,4 @@ export default function DocumentCreator({ template }: { template: Template }) {
       </article>
     </div>
   );
-}
-
-function FieldInput({
-  field,
-  value,
-  onChange,
-}: {
-  field: TemplateField;
-  value: string;
-  onChange: (value: string) => void;
-}) {
-  const id = `field-${field.name}`;
-  const inputClass =
-    "mt-1 block w-full rounded-md border border-stone-300 bg-white px-3 py-2 text-sm text-stone-900 shadow-sm focus:border-stone-500 focus:outline-none focus:ring-2 focus:ring-stone-200";
-
-  return (
-    <div>
-      <label htmlFor={id} className="block text-sm font-medium text-stone-800">
-        {field.label}
-        {field.required && <span className="text-red-600"> *</span>}
-      </label>
-      {field.type === "textarea" ? (
-        <textarea
-          id={id}
-          rows={3}
-          required={field.required}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className={inputClass}
-        />
-      ) : field.type === "select" ? (
-        <select
-          id={id}
-          required={field.required}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className={inputClass}
-        >
-          {field.options?.map((option) => (
-            <option key={option}>{option}</option>
-          ))}
-        </select>
-      ) : (
-        <input
-          id={id}
-          type={htmlInputType(field.type)}
-          min={field.type === "number" ? 0 : undefined}
-          required={field.required}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className={inputClass}
-        />
-      )}
-      {field.description && (
-        <p className="mt-1 text-xs text-stone-500">{field.description}</p>
-      )}
-    </div>
-  );
-}
-
-function htmlInputType(type: TemplateField["type"]): string {
-  switch (type) {
-    case "date":
-    case "number":
-    case "email":
-    case "url":
-      return type;
-    default:
-      return "text";
-  }
 }

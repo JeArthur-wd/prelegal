@@ -19,7 +19,8 @@ When instructed to build a feature:
 
 When writing code to make calls to LLMs, use your Cerebras skill to use LiteLLM via OpenRouter to the `openrouter/openai/gpt-oss-120b` model with Cerebras as the inference provider. You should use Structured Outputs so that you can interpret the results and populate fields in the legal document.
 
-The OPENROUTER_API_KEY goes in the `.env` file in the project root (see `.env.example`).
+The OPENROUTER_API_KEY goes in the `.env` file in the project root (see `.env.example`). Backend tests mock the LLM;
+run `PRELEGAL_LIVE_LLM_TESTS=1 uv run pytest -k live` to exercise the real one.
 
 ## Technical design
 
@@ -52,3 +53,7 @@ scripts/start-windows.ps1   scripts/stop-windows.ps1   # Windows
 - PL-4: V1 foundation: Docker, FastAPI backend serving the static frontend, fresh SQLite DB per start,
   start/stop scripts. API: `GET /api/health`, `POST /api/auth/signup`, `POST /api/auth/signin`
   (no sessions yet).
+- PL-5: AI chat replaces the form for the Mutual NDA. `POST /api/chat` takes the template id, conversation
+  and current values, and returns the assistant's reply plus validated field updates (`backend/chat.py`).
+  LLM calls live in `backend/llm.py`; set `PRELEGAL_LLM_MODEL` to override the model. In development, run
+  the backend on :8000 and `npm run dev`, which proxies `/api` to it.
