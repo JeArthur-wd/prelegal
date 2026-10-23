@@ -8,13 +8,15 @@ export interface ChatMessage {
 }
 
 export interface ChatRequest {
-  template_id: string;
+  /** The document being drafted, or null to let the assistant choose one. */
+  template_id: string | null;
   messages: ChatMessage[];
   values: FieldValues;
 }
 
 export interface ChatReply {
   reply: string;
+  template_id: string | null;
   updates: FieldValues;
 }
 

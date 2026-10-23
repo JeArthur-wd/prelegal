@@ -57,3 +57,7 @@ scripts/start-windows.ps1   scripts/stop-windows.ps1   # Windows
   and current values, and returns the assistant's reply plus validated field updates (`backend/chat.py`).
   LLM calls live in `backend/llm.py`; set `PRELEGAL_LLM_MODEL` to override the model. In development, run
   the backend on :8000 and `npm run dev`, which proxies `/api` to it.
+- PL-6: All 10 templates. The assistant chooses the document (`template_id` is null until it does), offers the
+  closest supported document for unsupported requests, and can switch documents mid-chat. When it picks a new
+  document the backend asks again with that document's fields. All templates are bundled into the static
+  frontend at build time; `frontend/src/lib/draft.ts` holds the draft state transitions.
