@@ -2,7 +2,6 @@ import "server-only";
 
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { cacheLife } from "next/cache";
 
 import type { Template, TemplateField } from "./template";
 
@@ -19,9 +18,6 @@ interface CatalogEntry {
 
 /** Loads a template and its field definitions from the template dataset. */
 export async function loadTemplate(id: string): Promise<Template> {
-  "use cache";
-  cacheLife("max");
-
   const catalog: { templates: CatalogEntry[] } = JSON.parse(
     await readFile(path.join(TEMPLATES_DIR, "catalog.json"), "utf-8"),
   );
