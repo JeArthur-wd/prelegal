@@ -6,6 +6,7 @@ import pytest
 import llm
 from chat import ChatTurn, FieldUpdate, apply_updates, build_system_prompt
 from templates import load_catalog
+from tests.conftest import signup
 
 NDA = load_catalog()["mutual-nda"]
 USER_MESSAGE = {"role": "user", "content": "Acme Corp and Globex LLC, starting tomorrow."}
@@ -17,6 +18,13 @@ def turn(reply="Thanks!", document_id=None, **updates):
         document_id=document_id,
         field_updates=[FieldUpdate(name=name, value=value) for name, value in updates.items()],
     )
+
+
+@pytest.fixture
+def client(client):
+    """Chat requires a signed-in user."""
+    signup(client)
+    return client
 
 
 @pytest.fixture
@@ -133,6 +141,12 @@ def test_model_cannot_unset_the_current_document(client, fake_llm):
 
     assert response.json()["template_id"] == "mutual-nda"
     assert response.json()["updates"] == {"party_a_name": "Acme Corp"}
+
+
+def test_chat_requires_sign_in(client, fake_llm):
+    client.cookies.clear()
+    assert chat(client).status_code == 401
+    assert fake_llm.calls == []
 
 
 def test_chat_unknown_template(client, fake_llm):

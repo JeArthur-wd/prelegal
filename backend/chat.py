@@ -5,15 +5,16 @@ import logging
 from datetime import date
 from typing import Literal
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
 
 import llm
+from auth import current_user
 from templates import Template, TemplateField, load_catalog
 
 logger = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/api/chat", tags=["chat"])
+router = APIRouter(prefix="/api/chat", tags=["chat"], dependencies=[Depends(current_user)])
 
 
 class ChatMessage(BaseModel):

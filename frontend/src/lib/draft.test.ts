@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { applyReply, EMPTY_DRAFT, type Draft } from "./draft.ts";
+import { applyReply, documentTitle, EMPTY_DRAFT, type Draft } from "./draft.ts";
 import type { Template } from "./template.ts";
 
 const nda: Template = {
@@ -11,6 +11,9 @@ const nda: Template = {
   body: "",
   fields: [
     { name: "party_a_name", label: "Party A", type: "text", required: true },
+    { name: "party_a_signatory_name", label: "Signatory", type: "text", required: false, default: "" },
+    { name: "party_b_name", label: "Party B", type: "text", required: true },
+    { name: "party_c_name", label: "Party C", type: "text", required: false, default: "" },
     { name: "term_years", label: "Term", type: "number", required: true, default: 2 },
   ],
 };
@@ -42,7 +45,13 @@ describe("applyReply", () => {
     );
     assert.deepEqual(draft, {
       templateId: "mutual-nda",
-      values: { party_a_name: "Acme", term_years: "2" },
+      values: {
+        party_a_name: "Acme",
+        party_a_signatory_name: "",
+        party_b_name: "",
+        party_c_name: "",
+        term_years: "2",
+      },
     });
   });
 
@@ -68,5 +77,27 @@ describe("applyReply", () => {
   it("ignores a document it doesn't know", () => {
     const current: Draft = { templateId: "mutual-nda", values: { party_a_name: "Acme" } };
     assert.equal(applyReply(current, { reply: "", template_id: "unknown", updates: {} }, templates), current);
+  });
+});
+
+describe("documentTitle", () => {
+  it("names the document after its first two parties, not their signatories", () => {
+    assert.equal(
+      documentTitle(nda, {
+        party_a_name: "Acme",
+        party_a_signatory_name: "Jane Doe",
+        party_b_name: " Globex ",
+        party_c_name: "Initech",
+      }),
+      "Mutual NDA: Acme & Globex",
+    );
+  });
+
+  it("skips parties that haven't been given yet", () => {
+    assert.equal(documentTitle(nda, { party_a_name: "", party_b_name: "Globex" }), "Mutual NDA: Globex");
+  });
+
+  it("falls back to the document title", () => {
+    assert.equal(documentTitle(nda, {}), "Mutual NDA");
   });
 });

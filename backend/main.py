@@ -13,6 +13,7 @@ load_dotenv(Path(__file__).parent.parent / ".env")
 
 import auth  # noqa: E402
 import chat  # noqa: E402
+import documents  # noqa: E402
 from db import reset_database  # noqa: E402
 
 FRONTEND_DIR = Path(
@@ -30,6 +31,7 @@ def create_app(frontend_dir: Path = FRONTEND_DIR) -> FastAPI:
     app = FastAPI(title="Prelegal", lifespan=lifespan)
     app.include_router(auth.router)
     app.include_router(chat.router)
+    app.include_router(documents.router)
 
     @app.get("/api/health")
     def health() -> dict[str, str]:

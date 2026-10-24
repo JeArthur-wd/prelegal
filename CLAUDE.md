@@ -61,3 +61,14 @@ scripts/start-windows.ps1   scripts/stop-windows.ps1   # Windows
   closest supported document for unsupported requests, and can switch documents mid-chat. When it picks a new
   document the backend asks again with that document's fields. All templates are bundled into the static
   frontend at build time; `frontend/src/lib/draft.ts` holds the draft state transitions.
+- PL-7: Users and saved documents. Sign-up/sign-in create a session (random token, stored hashed in the
+  `sessions` table, sent as the HttpOnly `prelegal_session` cookie). The app is behind a sign-in screen; chat and
+  documents require a session. Documents (template, title, field values, conversation) save automatically after
+  each assistant reply once a document is chosen, and can be reopened from "My documents". UI uses the brand
+  colours (Tailwind `brand-*` tokens in `globals.css`) and shows a "drafts are subject to legal review" disclaimer.
+
+### API
+- `GET /api/health`
+- `POST /api/auth/signup`, `POST /api/auth/signin` (start a session), `POST /api/auth/signout`, `GET /api/auth/me`
+- `POST /api/chat` (signed in): `{template_id | null, messages, values}` -> `{reply, template_id, updates}`
+- `GET|POST /api/documents`, `GET|PUT|DELETE /api/documents/{id}` (signed in; a user only sees their own)

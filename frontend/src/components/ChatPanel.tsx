@@ -45,14 +45,19 @@ export default function ChatPanel({ messages, pending, error, onSend, onRetry }:
   return (
     <section
       aria-label="Chat with the Prelegal assistant"
-      className="flex min-h-0 flex-1 flex-col rounded-lg border border-stone-200 bg-white shadow-sm"
+      className="flex min-h-0 flex-1 flex-col rounded-lg border border-slate-200 bg-white shadow-sm"
     >
       <div className="flex-1 space-y-4 overflow-y-auto p-4" aria-live="polite">
         {messages.map((message, index) => (
           <MessageBubble key={index} message={message} />
         ))}
         {pending && (
-          <p className="text-sm text-stone-500" role="status">
+          <p className="flex items-center gap-2 text-sm text-brand-gray" role="status">
+            <span aria-hidden className="flex gap-1">
+              <span className="size-1.5 animate-bounce rounded-full bg-brand-blue [animation-delay:-0.3s]" />
+              <span className="size-1.5 animate-bounce rounded-full bg-brand-blue [animation-delay:-0.15s]" />
+              <span className="size-1.5 animate-bounce rounded-full bg-brand-blue" />
+            </span>
             Assistant is typing…
           </p>
         )}
@@ -71,7 +76,7 @@ export default function ChatPanel({ messages, pending, error, onSend, onRetry }:
         <div ref={endRef} />
       </div>
 
-      <form onSubmit={submit} className="flex items-end gap-2 border-t border-stone-200 p-3">
+      <form onSubmit={submit} className="flex items-end gap-2 border-t border-slate-200 p-3">
         <label htmlFor="chat-input" className="sr-only">
           Your message
         </label>
@@ -82,13 +87,13 @@ export default function ChatPanel({ messages, pending, error, onSend, onRetry }:
           value={draft}
           onChange={(event) => setDraft(event.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Type your answer… (Enter to send, Shift+Enter for a new line)"
-          className="block w-full resize-none rounded-md border border-stone-300 px-3 py-2 text-sm text-stone-900 focus:border-stone-500 focus:outline-none focus:ring-2 focus:ring-stone-200"
+          placeholder="Type your message… (Enter to send, Shift+Enter for a new line)"
+          className="block w-full resize-none rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-brand-blue focus:outline-none focus:ring-2 focus:ring-brand-blue/30"
         />
         <button
           type="submit"
           disabled={pending || !draft.trim()}
-          className="rounded-md bg-stone-900 px-4 py-2 text-sm font-medium text-white hover:bg-stone-700 disabled:cursor-not-allowed disabled:bg-stone-300"
+          className="rounded-md bg-brand-purple px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-brand-purple-dark disabled:cursor-not-allowed disabled:bg-slate-300"
         >
           Send
         </button>
@@ -104,8 +109,8 @@ function MessageBubble({ message }: { message: ChatMessage }) {
       <div
         className={
           isUser
-            ? "max-w-[85%] whitespace-pre-wrap rounded-lg bg-stone-900 px-3 py-2 text-sm text-white"
-            : "prose prose-sm prose-stone max-w-[85%] rounded-lg bg-stone-100 px-3 py-2 prose-p:my-1 prose-ul:my-1"
+            ? "max-w-[85%] whitespace-pre-wrap rounded-lg rounded-br-sm bg-brand-navy px-3 py-2 text-sm text-white"
+            : "prose prose-sm prose-slate max-w-[85%] rounded-lg rounded-bl-sm bg-slate-100 px-3 py-2 prose-p:my-1 prose-ul:my-1 prose-ol:my-1"
         }
       >
         <span className="sr-only">{isUser ? "You: " : "Assistant: "}</span>

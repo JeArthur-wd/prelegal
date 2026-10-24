@@ -27,3 +27,14 @@ export function applyReply(draft: Draft, reply: ChatReply, templates: Template[]
     values: { ...initialValues(template.fields), ...reply.updates },
   };
 }
+
+/** A title for the saved document, e.g. "Mutual Non-Disclosure Agreement: Acme Corp & Globex LLC". */
+export function documentTitle(template: Template, values: FieldValues): string {
+  const parties = template.fields
+    // Party names, e.g. party_a_name or tenant_names, but not the people signing for them.
+    .filter((field) => /_names?$/.test(field.name) && !field.name.includes("signatory"))
+    .map((field) => values[field.name]?.trim())
+    .filter(Boolean)
+    .slice(0, 2);
+  return parties.length ? `${template.title}: ${parties.join(" & ")}` : template.title;
+}

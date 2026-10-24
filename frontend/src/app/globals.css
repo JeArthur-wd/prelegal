@@ -6,6 +6,17 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Brand colours (see CLAUDE.md). The -dark variants are for hover states. */
+@theme {
+  --color-brand-yellow: #ecad0a;
+  --color-brand-blue: #209dd7;
+  --color-brand-blue-dark: #1a7fae;
+  --color-brand-purple: #753991;
+  --color-brand-purple-dark: #5e2d75;
+  --color-brand-navy: #032147;
+  --color-brand-gray: #888888;
+}
+
 body {
-  @apply bg-stone-50 font-sans text-stone-900 print:bg-white;
+  @apply bg-slate-50 font-sans text-slate-800 print:bg-white;
 }
