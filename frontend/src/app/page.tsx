@@ -1,8 +1,8 @@
 import DocumentCreator from "@/components/DocumentCreator";
-import { loadTemplate } from "@/lib/templates-server";
+import { loadTemplates } from "@/lib/templates-server";
 
 export default async function Home() {
-  const template = await loadTemplate("mutual-nda");
+  const templates = await loadTemplates();
 
   return (
     <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-10 sm:px-6 print:p-0">
@@ -11,19 +11,20 @@ export default async function Home() {
           Prelegal
         </p>
         <h1 className="mt-1 text-3xl font-semibold text-stone-900">
-          {template.title} creator
+          Draft a legal document
         </h1>
         <p className="mt-2 text-stone-600">
-          Chat with our assistant about your agreement. The document fills in as
-          you go, and you can download it once every required field is complete.
+          Tell our assistant what you need. It picks the right document, asks you
+          the questions it needs, and fills in the document as you go. Download it
+          once every required field is complete.
         </p>
       </header>
 
-      <DocumentCreator template={template} />
+      <DocumentCreator templates={templates} />
 
       <p className="mt-8 text-xs text-stone-500 print:hidden">
-        This template is a general starting point, not legal advice. Have a
-        qualified lawyer review any agreement before you sign it.
+        These templates are a general starting point, not legal advice. Have a
+        qualified lawyer review any document before you sign it.
       </p>
     </main>
   );

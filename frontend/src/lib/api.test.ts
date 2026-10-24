@@ -24,12 +24,12 @@ describe("postChat", () => {
     let sent: { url: string; init: RequestInit } | undefined;
     mockFetch(async (url, init) => {
       sent = { url, init };
-      return Response.json({ reply: "Hi", updates: { party_a_name: "Acme" } });
+      return Response.json({ reply: "Hi", template_id: "mutual-nda", updates: { party_a_name: "Acme" } });
     });
 
     const reply = await postChat(request);
 
-    assert.deepEqual(reply, { reply: "Hi", updates: { party_a_name: "Acme" } });
+    assert.deepEqual(reply, { reply: "Hi", template_id: "mutual-nda", updates: { party_a_name: "Acme" } });
     assert.equal(sent?.url, "/api/chat");
     assert.equal(sent?.init.method, "POST");
     assert.deepEqual(JSON.parse(sent?.init.body as string), request);
