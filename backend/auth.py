@@ -5,6 +5,7 @@ and sent to the browser in an HttpOnly cookie.
 """
 
 import hashlib
+import os
 import secrets
 import sqlite3
 
@@ -18,6 +19,8 @@ router = APIRouter(prefix="/api/auth", tags=["auth"])
 
 SESSION_COOKIE = "prelegal_session"
 SESSION_MAX_AGE = 60 * 60 * 24 * 7  # one week
+# Set COOKIE_SECURE=true when served over HTTPS (e.g. on Render).
+COOKIE_SECURE = os.getenv("COOKIE_SECURE", "false").lower() == "true"
 
 # Checked against when the email is unknown, so both failure cases take the same time.
 _DUMMY_HASH = bcrypt.hashpw(b"dummy-password", bcrypt.gensalt())
@@ -56,7 +59,8 @@ def _start_session(db: sqlite3.Connection, response: Response, user_id: int) -> 
             "INSERT INTO sessions (token_hash, user_id) VALUES (?, ?)", (_hash_token(token), user_id)
         )
     response.set_cookie(
-        SESSION_COOKIE, token, max_age=SESSION_MAX_AGE, httponly=True, samesite="lax", path="/"
+        SESSION_COOKIE, token, max_age=SESSION_MAX_AGE, httponly=True,
+        secure=COOKIE_SECURE, samesite="lax", path="/",
     )
 
 
