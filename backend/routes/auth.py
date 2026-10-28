@@ -1,5 +1,7 @@
 """Authentication routes."""
 
+import os
+
 from fastapi import APIRouter, Depends, Response
 from sqlalchemy.orm import Session
 
@@ -11,6 +13,7 @@ from core.dependencies import get_current_user
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 
 COOKIE_MAX_AGE = 60 * 60 * 24 * 7  # 7 days
+COOKIE_SECURE = os.getenv("COOKIE_SECURE", "false").lower() == "true"
 
 
 @router.post("/signup", response_model=AuthResponse)
@@ -23,7 +26,7 @@ async def signup(request: SignupRequest, response: Response, db: Session = Depen
         key="access_token",
         value=token,
         httponly=True,
-        secure=False,  # Set to True in production with HTTPS
+        secure=COOKIE_SECURE,
         samesite="lax",
         max_age=COOKIE_MAX_AGE,
     )
@@ -44,7 +47,7 @@ async def signin(request: SigninRequest, response: Response, db: Session = Depen
         key="access_token",
         value=token,
         httponly=True,
-        secure=False,  # Set to True in production with HTTPS
+        secure=COOKIE_SECURE,
         samesite="lax",
         max_age=COOKIE_MAX_AGE,
     )
