@@ -5,7 +5,8 @@ from models.chat import Message, ChatResponse
 from models.documents import get_document_catalog_text, DocumentType
 
 MODEL = "openrouter/openai/gpt-oss-120b"
-EXTRA_BODY = {"provider": {"order": ["cerebras"]}}
+# reasoning goes via extra_body: litellm rejects reasoning_effort for this OpenRouter model
+EXTRA_BODY = {"provider": {"order": ["cerebras"]}, "reasoning": {"effort": "low"}}
 
 DOCUMENT_CATALOG = get_document_catalog_text()
 
@@ -205,7 +206,6 @@ def process_message(messages: list[Message]) -> ChatResponse:
         model=MODEL,
         messages=llm_messages,
         response_format=ChatResponse,
-        reasoning_effort="low",
         extra_body=EXTRA_BODY
     )
 
